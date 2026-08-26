@@ -110,7 +110,6 @@ Identify tissue-containing regions within each whole-slide image (WSI) and gener
 
 `generate_tile_coords.py`
 
-
 **Default Extraction Settings**
 
 | Parameter               | Default          |
@@ -142,21 +141,6 @@ tile_coords/
     └── <stain>/
         └── <slide_id>_<parameters>_coords.csv
 ```
-
-`coordinate_summary.csv`
-
-| donor_id | region | stain | slide_id | n_tiles | coord_file | patch_size | resolution | units |
-| -------- | ------ | ----- | -------- | ------- | ---------- | ---------- | ---------- | ----- |
-| K0038 | DLFC | LHE | ... | ... | ..._coords.csv | 256 | 0.5 | mpp |
-
-`donor_coordinates.csv`
-
-| tile_id | donor_id | slide_id | x_start | y_start | tile_width | tile_height | resolution | units |
-| ------- | -------- | -------- | ------- | ------- | ---------- | ----------- | ---------- | ----- |
-| 0 | K0038 | ... | 1280 | 512 | 256 | 256 | 0.5 | mpp |
-| 1 | K0038 | ... | 1536 | 512 | 256 | 256 | 0.5 | mpp |
-| ... | ... | ... | ... | ... | ... | ... | ... | ... |
-
 
 Each coordinate file contains the locations of tissue-containing tiles retained from the corresponding WSI. A separate summary CSV records the number of retained tiles, extraction parameters, coordinate-file location, and processing status for each slide in provided slide image metadata. 
 
