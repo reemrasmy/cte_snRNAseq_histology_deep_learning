@@ -31,7 +31,7 @@ Develop an **attention-based deep learning framework** to predict donor-level di
 ## Methodology
 
 <p align="center">
-  <img src="/Users/reem/bioinformaticsMS/capstone/cte_snRNAseq_histology_deep_learning/readme_figures/methodology_2.png" width="100%">
+  <img src="readme_figures/methodology_2.png" width="100%">
 </p>
 <p align="center">
   <em>Overview of the image-to-transcriptome deep learning model framework.</em>
@@ -165,8 +165,8 @@ Each coordinate file contains the locations of tissue-containing tiles retained 
 Visually inspect tile-coordinate coverage before feature extraction to confirm that retained coordinates appropriately represent tissue regions within each whole-slide image. Below is a representation of sample quality control analysis outputs
 
 <p align="center">
-  <img src="/Users/reem/bioinformaticsMS/capstone/cte_snRNAseq_histology_deep_learning/readme_figures/poor_tile_coverage.png" width="50%">
-  <img src="/Users/reem/bioinformaticsMS/capstone/cte_snRNAseq_histology_deep_learning/readme_figures/strong_tile_coverage.png" width="50%">
+  <img src="readme_figures/poor_tile_coverage.png" width="50%">
+  <img src="readme_figures/strong_tile_coverage.png" width="50%">
 </p>
 
 <p align="center">
