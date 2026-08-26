@@ -146,7 +146,9 @@ Each coordinate file contains the locations of tissue-containing tiles retained 
 
 ### 2. Quality Control 
 
-Visually inspect tile-coordinate coverage before feature extraction to confirm that retained coordinates appropriately represent tissue regions within each whole-slide image. Below is a representation of sample quality control analysis outputs
+`tissue_segmentation_qc.py`
+
+Visually inspect tile-coordinate coverage before feature extraction to confirm that retained coordinates appropriately represent tissue regions within each whole-slide image. Below is a representation of quality control analysis outputs.
 
 <p align="center">
   <img src="readme_figures/poor_tile_coverage.png" width="50%">
@@ -154,18 +156,15 @@ Visually inspect tile-coordinate coverage before feature extraction to confirm t
 </p>
 
 <p align="center">
-  <em>Example of poor or incomplete tissue-coordinate coverage (top) compared with strong coverage (bottom) along with the random sample tile patches generated.</em>
+  <em>Example of <strong>poor or incomplete tissue-coordinate coverage (top)</strong> compared with <strong>strong coverage (bottom)</strong> along with the random sample tile patches generated. </em>
 </p>
-
-**Script**
-
-`tissue_segmentation_qc.py` 
+ 
 
  Generates a whole-slide thumbnail, coordinate coverage map, and randomly sampled context patches for selected slides. Slides can be processed by **donor ID**, **slide ID**, or across the full coordinate summary.
 
 **Usage**
 
-To evaluate all slides present for a given donor:
+To evaluate **all slides** available for a **given donor**:
 
 ```bash
 python src/quality_control/tissue_segmentation_qc.py \
@@ -175,7 +174,7 @@ python src/quality_control/tissue_segmentation_qc.py \
     --donor-ids K0038
 ```
 
-To evaluate specific slides:
+To evaluate **specific slides**:
 
 ```bash
 python src/quality_control/tissue_segmentation_qc.py \
@@ -185,11 +184,11 @@ python src/quality_control/tissue_segmentation_qc.py \
     --slide-ids K0038_DLFC_7_LHE_20_001
 ```
 
-Use `--all-slides` to run QC across every slide in the coordinate summary.
+Use `--all-slides` to run QC across **every slide in the coordinate summary**.
 
 **Output**
 
-For each slide, the script generates:
+Grouped by donor, for each slide the script generates:
 
 ```text
 qc/
@@ -201,9 +200,8 @@ qc/
             ├── context_patches/
             └── context_patch_summary.csv
 ```
+*The coordinate coverage map is used to confirm that tile locations follow the expected tissue regions, while the sampled context patches provide a closer view of the tissue represented by selected coordinates.*
 
-
-The coordinate coverage map is used to confirm that tile locations follow the expected tissue regions, while the sampled context patches provide a closer view of the tissue represented by selected coordinates.
 
 
 
