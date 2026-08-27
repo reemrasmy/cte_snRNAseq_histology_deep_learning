@@ -10,6 +10,38 @@ import pandas as pd
 from PIL import Image
 from tiatoolbox.wsicore.wsireader import WSIReader
 
+"""
+-------------------------------- Tile Coordinate QC --------------------------------
+
+This script performs visual quality control (QC) on generated WSI tile coordinates.
+
+For each selected slide, the script:
+1. Reads the tile coordinate CSV and corresponding whole-slide image (WSI).
+2. Converts tile coordinates to the WSI level-0 coordinate space (the raw image).
+3. Creates a thumbnail showing raw image and the overall tissue section.
+4. Overlays all generated tile coordinates to visualize tissue coverage done by generate_tile_coords.py.
+5. Randomly samples tile locations and extracts larger context patches for
+   visual inspection of the tissue represented by the coordinates.
+6. Saves slide-level QC information and a summary of the full QC run.
+
+Slides can be selected using donor IDs, individual slide IDs, or --all-slides. 
+The output allows the user to visually inspect the quality of tiles, tissue pigmentation, and visualize how well tissue segmentation worked 
+
+Example Usage:
+
+python src/qc/tile_coordinate_qc.py \
+    --coordinate-summary metadata/DLFC/IBA1_coordinate_summary.csv \
+    --slides-dir /path/to/IBA1/slides \
+    --output-dir qc/tile_coordinates \
+    --donor-ids K0038 K0125 \
+    --n-patches 5 \
+    --context-size 1024
+
+The default context patch size is 1024 x 1024 pixels, extracted at the same
+MPP used to generate the original tile coordinates.
+------------------------------------------------------------------------------------
+"""
+
 ########################## Command-line Arguments ##########################
 def parse_args():
     parser = argparse.ArgumentParser(
@@ -919,16 +951,3 @@ def main():
 if __name__ == "__main__":
     main()
 
-"""
-Test Run: 
-
-python tissue_segmentation_qc.py \
-    --coordinate-summary /restricted/projectnb/cteseq/users/rrasmy/cte_snRNAseq_image_transcriptomics_model/results/lhe_tile_coordinate_summary.csv \
-    --slides-dir /restricted/projectnb/cteseq/data/CTE_Single_Cell/'Whole Slide Images'/DLFC/LHE \
-    --output-dir /restricted/projectnb/cteseq/users/rrasmy/cte_snRNAseq_image_transcriptomics_model/qc/test \
-    --donor-ids K0044 K1573 \
-    --n-patches 10 \
-    --context-size 1024 \
-    --thumbnail-max-dim 1800 \
-    --random-seed 5
-"""
