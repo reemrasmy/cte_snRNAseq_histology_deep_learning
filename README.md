@@ -48,21 +48,21 @@ Develop an **attention-based deep learning framework** to predict donor-level di
 
 Two Conda environments are provided to support different stages of the workflow:
 
-* `cte-wsi` — General-purpose environment for data preparation, whole-slide image processing, quality control, and visualization.
-* `cte-wsi-gpu` — GPU-enabled environment for deep learning workflows, including UNI2 feature extraction and model training.
+* `cte-histology` — General-purpose environment for data preparation, whole-slide image processing, quality control, and visualization.
+* `cte-histology-gpu` — GPU-enabled environment for deep learning workflows, including UNI2 feature extraction and model training.
 
 Create the standard environment using:
 
 ```bash
-conda env create -f environment/cte-wsi.yml
-conda activate cte-wsi
+conda env create -f environment/cte-histology.yml
+conda activate cte-histology
 ```
 
 For GPU-enabled workflows:
 
 ```bash
-conda env create -f environment/cte-wsi-gpu.yml
-conda activate cte-wsi-gpu
+conda env create -f environment/cte-histology-gpu.yml
+conda activate cte-histology-gpu
 ```
 
 The GPU environment uses **PyTorch 2.0.1 with CUDA 11.8**. GPU compatibility may depend on the hardware available on the system.
@@ -120,7 +120,7 @@ Identify tissue-containing regions within each whole-slide image (WSI) and gener
 | Tissue mask             | Otsu             |
 | Minimum tissue coverage | 80%              |
 
-*AValid tile locations are retained based on a minimum tissue-coverage threshold.* 
+*Valid tile locations are retained based on a minimum tissue-coverage threshold.* 
 
 **Usage**
 
