@@ -1,0 +1,46 @@
+name: cte-histology
+
+channels:
+  - conda-forge
+  - pytorch
+  - defaults
+
+dependencies:
+  # Core Python
+  - python=3.10
+  - pip
+
+  # Scientific computing
+  - numpy<2
+  - pandas
+  - scipy
+  - scikit-learn
+  - matplotlib
+  - pillow
+  - tqdm
+
+  # Jupyter / exploration
+  - jupyterlab
+  - ipykernel
+
+  # Image processing
+  - scikit-image
+  - opencv
+
+  # Deep learning
+  - pytorch
+  - torchvision
+
+  # WSI support
+  - openslide
+
+  # pip-only / easier through pip
+  - pip:
+      - openslide-python
+      - tiatoolbox
+      - timm
+      - huggingface_hub
+
+
+
+# conda activate /restricted/projectnb/cteseq/projects/single_nucleus/Deep_Learning_Project/snRNAseq_histology_deep_learning/conda_envs/cte-wsi 
