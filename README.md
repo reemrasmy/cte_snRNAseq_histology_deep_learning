@@ -156,7 +156,7 @@ Visually inspect tile-coordinate coverage before feature extraction to confirm t
 </p>
 
 <p align="center">
-  <em>Example of <strong>poor or incomplete tissue-coordinate coverage (top)</strong> compared with <strong>strong coverage (bottom)</strong> along with the random sample tile patches generated. </em>
+  <em>Example of <strong>poor or incomplete tissue-coordinate coverage (top)</strong> compared with <strong>strong coverage (bottom)</strong> along with the random sample tile patches generated per processed slide. </em>
 </p>
  
 
@@ -202,10 +202,48 @@ qc/
 ```
 *The coordinate coverage map is used to confirm that tile locations follow the expected tissue regions, while the sampled context patches provide a closer view of the tissue represented by selected coordinates.*
 
+### 3. Feature Extraction
 
+`extract_uni2_embeddings.py`
 
+Converts each retained tissue tile into a numerical feature representation using the **UNI2-h Pathology Foundation Model** for downstream deep learning models.
 
+<p align="center">
+  <img src="readme_figures/uni2_feature_extraction.png" width="100%">
+</p>
 
+<p align="center">
+  <em>
+    Each retained tissue tile is encoded by UNI2-h as a <strong>1536-dimensional feature vector</strong>, producing an <strong>[N_tiles × 1536]</strong> feature matrix for each WSI.
+  </em>
+</p>
 
+UNI2 feature extraction is GPU-accelerated, **activate the GPU environment before running this step**:
 
+```bash
+conda activate cte-histology-gpu
+```
 
+**Usage**
+
+```bash
+python src/data_processing/extract_uni2_embeddings.py \
+    --metadata /path/to/tile_coordinate_summary.csv \
+    --embedding-root /path/to/embeddings/output/directory\
+    --index-out /path/to/output/embedding_index.csv
+```
+
+*Use `--smoke-test` to process only the first slide in the coordinate summary for verifying the feature extraction workflow before running the full dataset.*
+
+**Output**
+
+For each WSI, the script saves a PyTorch .pt file containing the UNI2 tile embeddings to the output directory. An **embedding index CSV** is also generated to track all processed slides within the input csv and their embedding files.
+
+```text
+embeddings/
+└── <region>/
+    └── <stain>/
+    ├── slide_id_1.pt
+    ├── slide_id_2.pt
+    ├── ...
+```
