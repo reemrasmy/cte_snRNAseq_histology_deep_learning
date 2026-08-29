@@ -29,7 +29,7 @@ The output allows the user to visually inspect the quality of tiles, tissue pigm
 
 Example Usage:
 
-python src/qc/tile_coordinate_qc.py \
+python src/quality_control/tissue_segmentation_qc.py \
     --coordinate-summary metadata/DLFC/IBA1_coordinate_summary.csv \
     --slides-dir /path/to/IBA1/slides \
     --output-dir qc/tile_coordinates \
@@ -951,3 +951,15 @@ def main():
 if __name__ == "__main__":
     main()
 
+
+"""
+
+python src/quality_control/tissue_segmentation_qc.py \
+    --coordinate-summary /restricted/projectnb/cteseq/projects/single_nucleus/Deep_Learning_Project/snRNAseq_histology_deep_learning/metadata/DLFC/LHE/lhe_tile_coordinate_summary.csv \
+    --slides-dir /restricted/projectnb/cteseq/data/CTE_Single_Cell/'Whole Slide Images'/DLFC/LHE \
+    --output-dir qc/sample_qc \
+    --donor-ids K0756 K1010 \
+    --n-patches 5 
+
+
+"""

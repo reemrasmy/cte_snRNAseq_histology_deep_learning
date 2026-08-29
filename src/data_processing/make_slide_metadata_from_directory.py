@@ -14,9 +14,9 @@ Slide IDs are generated as:
 
 Example command:
     python -m src.data_processing.make_slide_metadata_from_directory \
-        --slides-dir /path/to/DLFC/LHE \
+        --slides-dir /path/to/slide_image/storage/directory \
         --region DLFC \
-        --output-csv /path/to/lhe_metadata.csv
+        --output-csv /path/to/output/metadata
 """
 
 from __future__ import annotations
