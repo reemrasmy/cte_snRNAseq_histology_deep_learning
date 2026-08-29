@@ -84,7 +84,6 @@ python -m src.data_processing.make_slide_metadata_from_directory \
     --region DLFC \
     --output-csv /path/to/output/metadata
 ```        
-**Usage**: 
 
 `make_slide_metadata_from_case_list.py` -- builds slide metadata from a predefined case list (csv or excel spreadsheet)
 
@@ -246,4 +245,122 @@ embeddings/
     ├── slide_id_1.pt
     ├── slide_id_2.pt
     ├── ...
+    └── <stain>_embedding_index.csv
 ```
+
+#### 4. Modeling
+
+The extracted **[N_tiles × 1536] UNI2 feature matrices** are modeled using
+**attention-based multiple instance learning (ABMIL)** to generate donor-level predictions.
+
+Each WSI is treated as a collection, or *bag*, of tile-level feature vectors.
+The model learns an attention score for each tile and combines the weighted tile
+features into a single donor-level representation used for prediction.
+
+<p align="center">
+  <img src="readme_figures/abmil_modeling.png" width="90%">
+</p>
+
+<p align="center">
+  <em>
+    Overview of the shared ABMIL framework used for donor-level CTE stage
+    classification and transcriptomic regression.
+  </em>
+</p>
+
+#### 4.1 Shared ABMIL Framework
+
+`cte_abmil.py`
+
+Defines the shared **ABMIL model architecture and dataset classes** used by both
+prediction workflows. The classification and regression scripts import these
+components and provide task-specific (classification/regression) training, prediction, and evaluation logic.
+
+| Prediction Task | Modeling Script | Target |
+| --- | --- | --- |
+| CTE Stage Classification | `abmil_cte_stage_classification.py` | CTE disease stage |
+| snRNA-seq Regression | `abmil_snRNAseq_regression.py` | Continuous transcriptomic features |
+
+
+#### 4.2 CTE Stage Classification
+
+`abmil_cte_stage_classification.py`
+
+Train an **ABMIL classifier** to predict **CTE disease stage using UNI2
+embeddings**. Model evaluation is performed using **donor-level cross-validation**.
+
+**Usage**
+
+```bash
+python src/modeling/abmil_cte_stage_classification.py \
+    --metadata /path/to/classification_metadata.csv \
+    --output-dir /path/to/results \
+    -- stain <stain>
+    --coordinate-source
+    --target-name low_vs_high
+```
+
+**Output**
+
+Each modeling run creates a structured results directory containing donor-level attention heatmaps & highest attention tiles, model
+predictions and summaries, cross-validation metrics, and tile-level attention scores per image.
+
+```
+results/
+└── <run_name>/
+    ├── attention_scores/
+    ├── attention_heatmaps/
+    ├── top_attention_tiles/
+    ├── confusion_matrix.png
+    ├── roc_curve.png
+    ├── predictions.csv
+    ├── fold_metrics
+    ├── ... (additional run statistics)
+    └── run_config.json
+
+```    
+
+#### 4.3 snRNA-seq Molecular Feature Prediction (Continuous Targets)
+
+`abmil_snRNAseq_regression.py`
+
+Train an ABMIL regression model to predict **continuous donor-level molecular
+features derived from snRNA-seq** using histology image UNI2 embeddings.
+
+**Usage**
+
+```bash
+python src/modeling/abmil_snRNAseq_regression.py \
+    --metadata /path/to/regression_metadata.csv \
+    --stains <stain> 
+    --output-dir /path/to/results \
+    --target-name microglia \
+    --targets pc1_mean pc2_mean \
+    --run-name iba1_microglia_pc1_pc2
+```
+*Use other available optional run tags including `--filter-name` or `coordinate_source` for more specific directory naming.* 
+
+**Output**
+
+Each modeling run creates a structured results directory containing **donor-level attention heatmaps & highest attention tiles, observed vs. predicted plots**, model summaries and fold metrics, cross-validation metrics, and tile-level attention scores per image.
+
+```text
+results/
+    └── <run_name>/
+        ├── checkpoints/
+        ├── attention_scores/
+        ├── attention_heatmaps/
+        ├── top_attention_tiles/
+        ├── plots/
+        │   ├── <target_1>_observed_vs_predicted.png
+        │   └── <target_2>_observed_vs_predicted.png
+        │
+        ├── fold_*_training_history.csv
+        ├── fold_metrics.csv
+        ├── oof_predictions.csv
+        ├── pooled_oof_metrics.json
+        └── run_config.json
+``` 
+
+
+
