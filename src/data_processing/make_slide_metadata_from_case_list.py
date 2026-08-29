@@ -21,9 +21,9 @@ The standardized slide ID is generated as:
 Example Command-line Run:
     python -m src.data_processing.make_slide_metadata_from_case_list \
         --input-csv /path/to/case_list.csv \
-        --slides-dir /path/to/slides \
+        --slides-dir /path/to/slide_image/directory \
         --region DLFC \
-        --output-csv /path/to/slide_metadata.csv \
+        --output-csv /path/to/output/slide_metadata.csv \
         --missing-csv /path/to/missing_slides.csv   
 
 The missing-file report is optional. If --missing-csv is not provided, the

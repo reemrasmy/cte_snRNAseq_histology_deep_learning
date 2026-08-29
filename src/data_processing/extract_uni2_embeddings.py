@@ -47,7 +47,7 @@ Sample Usage:
         --index-out /path/to/output/embedding_index.csv    
 
 Sample Usage smoke test (process only the first slide in the supplied metadata):
-    python src/extract_uni2_embeddings.py \
+    python src/data_processing/extract_uni2_embeddings.py \
         --metadata /path/to/tile_coordinate_summary.csv \
         --embedding-root /path/to/output/embeddings \
         --index-out /path/to/output/embedding_index.csv \
