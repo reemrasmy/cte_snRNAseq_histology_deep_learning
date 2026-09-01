@@ -951,15 +951,3 @@ def main():
 if __name__ == "__main__":
     main()
 
-
-"""
-
-python src/quality_control/tissue_segmentation_qc.py \
-    --coordinate-summary /restricted/projectnb/cteseq/projects/single_nucleus/Deep_Learning_Project/snRNAseq_histology_deep_learning/metadata/DLFC/LHE/lhe_tile_coordinate_summary.csv \
-    --slides-dir /restricted/projectnb/cteseq/data/CTE_Single_Cell/'Whole Slide Images'/DLFC/LHE \
-    --output-dir qc/sample_qc \
-    --donor-ids K0756 K1010 \
-    --n-patches 5 
-
-
-"""

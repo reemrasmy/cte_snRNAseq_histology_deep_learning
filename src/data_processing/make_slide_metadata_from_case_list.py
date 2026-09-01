@@ -323,15 +323,3 @@ def main() -> None:
 if __name__ == "__main__":
     main()
 
-
-"""
-Test Run: 
-
-python -m src.data_processing.make_slide_image_metadata \
-    --input-csv /restricted/projectnb/cteseq/users/rrasmy/cte_snRNAseq_image_transcriptomics_model/data_processing/at8_case_list.csv \
-    --slides-dir "/restricted/projectnb/cteseq/data/CTE_Single_Cell/Whole Slide Images/DLFC/AT8/AT8 b7" \
-    --region DLFC \
-    --output-csv /restricted/projectnb/cteseq/users/rrasmy/cte_snRNAseq_image_transcriptomics_model/metadata/test_at8_metadata.csv \
-    --missing-csv /restricted/projectnb/cteseq/users/rrasmy/cte_snRNAseq_image_transcriptomics_model/metadata/test_at8_missing_files.csv
-
-"""
