@@ -248,7 +248,7 @@ embeddings/
     └── <stain>_embedding_index.csv
 ```
 
-#### 4. Modeling
+### 4. Modeling
 
 The extracted **[N_tiles × 1536] UNI2 feature matrices** are modeled using
 **attention-based multiple instance learning (ABMIL)** to generate donor-level predictions.
@@ -361,6 +361,9 @@ results/
         ├── pooled_oof_metrics.json
         └── run_config.json
 ``` 
+
+### Modeling Results & Visualizations
+
 
 
 
