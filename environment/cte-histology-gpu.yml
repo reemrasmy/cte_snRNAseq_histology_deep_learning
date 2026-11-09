@@ -1,0 +1,40 @@
+name: cte-histology-gpu
+
+channels:
+  - pytorch
+  - nvidia
+  - conda-forge
+  - defaults
+
+dependencies:
+  - python=3.10
+
+  # GPU-compatible PyTorch stack
+  - pytorch=2.0.1
+  - torchvision=0.15.2
+  - torchaudio=2.0.2
+  - pytorch-cuda=11.8
+
+  # Core scientific packages
+  - numpy
+  - pandas
+  - scipy
+  - scikit-learn
+  - pillow
+  - tqdm
+  - pyyaml
+
+  # Needed for WSI/image reading
+  - openslide
+  - openslide-python
+
+  # Pip-only / easier via pip
+  - pip
+  - pip:
+      - timm
+      - huggingface_hub
+      - tiatoolbox
+      - safetensors
+
+
+# conda activate /restricted/projectnb/cteseq/projects/single_nucleus/Deep_Learning_Project/snRNAseq_histology_deep_learning/conda_envs/cte-wsi-gpu

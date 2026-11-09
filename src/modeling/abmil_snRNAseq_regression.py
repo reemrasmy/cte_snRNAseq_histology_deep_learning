@@ -13,13 +13,13 @@ Visualization is handled by:
     - src/visualization/regression_plots.py
 
 Current Implementation: 
-    - Supports one embedding file / WSI per donor.
+    - Supports one embedding file (onw whole slide image) per donor.
     - Supports one or more continuous snRNA-seq target columns.
     - Does not yet support combining multiple embedding files or stains
       for the same donor in a single model input.
 
-Example Run: 
-    python -m src.modeling.abmil_snRNAseq_regression \
+Sample Usage: 
+    python src/modeling/abmil_snRNAseq_regression.py \
         --metadata /path/to/embedding_target_metadata.csv \     -- can be created using src/data_processing/regression_data_prep.py
         --output-dir /path/to/results/regression/... \
         --stains IBA1 \
@@ -44,6 +44,10 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
+# Adding the project root to be able to run from the command-line directly
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(PROJECT_ROOT))
+
 import numpy as np
 import pandas as pd
 import torch
@@ -54,10 +58,10 @@ from sklearn.preprocessing import StandardScaler
 from torch import nn
 from torch.utils.data import DataLoader, Dataset
 
-from final_src.modeling.cte_abmil import ABMILRegressor
-from final_src.visualization.attention_heatmaps import save_attention_heatmap
-from final_src.visualization.high_attention_tiles import save_top_attention_tiles
-from final_src.visualization.regression_plots import save_prediction_plot
+from src.modeling.cte_abmil import ABMILRegressor
+from src.visualization.attention_heatmaps import save_attention_heatmap
+from src.visualization.high_attention_tiles import save_top_attention_tiles
+from src.visualization.regression_plots import save_prediction_plot
 
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 BATCH_SIZE = 1
@@ -73,20 +77,25 @@ def parse_args() -> argparse.Namespace:
     # Input/output
     parser.add_argument("--metadata", type=Path, required=True,
                         help="Donor-level regression metadata CSV.")
+    
     parser.add_argument("--output-dir", type=Path, required=True,
                         help="Base directory for regression results.")
 
     # Experiment description
     parser.add_argument("--stains", nargs="+", required=True,
                         help="Histology stain(s), e.g. IBA1 or IBA1 AT8.")
+
     parser.add_argument("--target-name", required=True,
                         help="Descriptive name for the biological target set used for organizing results, e.g. microglia_pc1_pc2.")
+    
     parser.add_argument("--coordinate-source", default=None,
                         help="Optional coordinate source, e.g. native or transferred_from_lhe.")
+    
     parser.add_argument("--filter-name", default=None,
                         help="Optional filtering description, e.g. white075.")
-    parser.add_argument("--run-name", default="baseline",
-                        help="Optional experiment description. Default: baseline.")
+    
+    parser.add_argument("--run-name", default="",
+                        help="Optional experiment description.")
 
     # Targets: allowing for 1 or more predictive columns
     parser.add_argument("--targets", nargs="+", required=True,
@@ -722,18 +731,6 @@ if __name__ == "__main__":
     main()
 
 
-"""
-Test run: 
 
-python -m final_src.modeling.abmil_snRNAseq_regression \
-    --metadata /restricted/projectnb/cteseq/users/rrasmy/cte_snRNAseq_image_transcriptomics_model/metadata/regression/IBA1/native/white_filter/threshold_075/iba1_micro_pc_regression_metadata_w_lhe_and_002_replacements.csv \
-    --output-dir /restricted/projectnb/cteseq/users/rrasmy/cte_snRNAseq_image_transcriptomics_model/results/modeling_results/pc_regression \
-    --stains IBA1 \
-    --coordinate-source native \
-    --filter-name white075 \
-    --target-name microglia_pc1_pc2 \
-    --targets pc1_mean pc2_mean \
-    --run-name argparse_test
-"""
 
 

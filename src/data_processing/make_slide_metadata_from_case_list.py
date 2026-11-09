@@ -21,9 +21,9 @@ The standardized slide ID is generated as:
 Example Command-line Run:
     python -m src.data_processing.make_slide_metadata_from_case_list \
         --input-csv /path/to/case_list.csv \
-        --slides-dir /path/to/slides \
+        --slides-dir /path/to/slide_image/directory \
         --region DLFC \
-        --output-csv /path/to/slide_metadata.csv \
+        --output-csv /path/to/output/slide_metadata.csv \
         --missing-csv /path/to/missing_slides.csv   
 
 The missing-file report is optional. If --missing-csv is not provided, the
@@ -323,15 +323,3 @@ def main() -> None:
 if __name__ == "__main__":
     main()
 
-
-"""
-Test Run: 
-
-python -m src.data_processing.make_slide_image_metadata \
-    --input-csv /restricted/projectnb/cteseq/users/rrasmy/cte_snRNAseq_image_transcriptomics_model/data_processing/at8_case_list.csv \
-    --slides-dir "/restricted/projectnb/cteseq/data/CTE_Single_Cell/Whole Slide Images/DLFC/AT8/AT8 b7" \
-    --region DLFC \
-    --output-csv /restricted/projectnb/cteseq/users/rrasmy/cte_snRNAseq_image_transcriptomics_model/metadata/test_at8_metadata.csv \
-    --missing-csv /restricted/projectnb/cteseq/users/rrasmy/cte_snRNAseq_image_transcriptomics_model/metadata/test_at8_missing_files.csv
-
-"""
